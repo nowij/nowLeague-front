@@ -1,9 +1,13 @@
 <script setup>
-import { Home } from "@/views";
+import { Nav, Foot } from "@/components";
 </script>
 
 <template>
-  <div>
-    <Home></Home>
+  <div class="min-h-screen bg-gray-50">
+    <Nav />
+    <div>
+      <router-view />
+    </div>
+    <Foot />
   </div>
 </template>
