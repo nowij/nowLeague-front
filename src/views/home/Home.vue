@@ -1,7 +1,37 @@
 <template>
   <main class="container mx-auto px-4 py-8">
+    <!-- 리그 순위 -->
+    <div class="mb-8 space-y-4">
+      <div class="flex items-center gap-2">
+        <BarChart3Icon class="h-5 w-5 text-green-500" />
+        <h2 class="text-xl font-semibold">V리그 순위</h2>
+      </div>
+      <n-card>
+        <div class="overflow-x-auto">
+          <n-table single-column>
+            <thead>
+              <tr class="text-center">
+                <th class="w-[50px]">순위</th>
+                <th>팀</th>
+                <th>경기수</th>
+                <th>승점</th>
+                <th>승</th>
+                <th>패</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="text-center">
+                <td>1</td>
+                <td>ㅁㅁㅁㅁ</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </n-table>
+        </div>
+      </n-card>
+    </div>
     <div class="grid gap-8 md:grid-cols-1 lg:grid-cols-2">
-      <!-- 왼쪽 -->
+      <!-- 오늘 경기 결과 -->
       <div class="space-y-4">
         <div class="flex items-center gap-2">
           <TrophyIcon class="h-5 w-5 text-orange-500" />
@@ -32,7 +62,7 @@
         </n-card>
       </div>
 
-      <!-- 오른쪽 -->
+      <!-- 다음 경기 -->
       <div class="space-y-4">
         <div class="flex items-center gap-2">
           <CalendarIcon class="h-5 w-5 text-blue-500" />
@@ -66,7 +96,7 @@
 </template>
 
 <script setup>
-import { CalendarIcon, TrophyIcon } from "lucide-vue-next"
+import { CalendarIcon, TrophyIcon, BarChart3Icon } from "lucide-vue-next"
 import { NTag, NCard, NTable} from "naive-ui"
 </script>
 

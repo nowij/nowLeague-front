@@ -1,4 +1,4 @@
-import {Layout, Home} from "@/views/Home";
+import {Layout, Home} from "@/views/home";
 
 export default {
     path: '/',
