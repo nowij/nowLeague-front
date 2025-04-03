@@ -3,7 +3,7 @@
     <div class="container mx-auto flex h-16 items-center justify-between px-4">
       <div class="flex items-center">
         <a href="/" class="text-xl font-bold text-gray-900">
-          스ㄴㄴㄴㄴ
+          Now League
         </a>
       </div>
       <ul class="flex space-x-4">
@@ -17,7 +17,7 @@
           <router-link to="/" class="hover:underline">Results</router-link>
         </li>
         <li class="text-sm font-medium transition-colors">
-          <router-link to="/" class="hover:underline">Teams</router-link>
+          <router-link to="/team" class="hover:underline">Teams</router-link>
         </li>
       </ul>
     </div>
