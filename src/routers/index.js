@@ -1,13 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import ScheduleRoute from "@/routers/Schedule.route";
-import HomeRoute from "@/routers/Home.route";
+import MainRoute from "@/routers/Main.route";
 import TeamRoute from "@/routers/Team.route";
+import ResultRoute from "@/routers/Result.route";
 
 const routes = [
-  {...HomeRoute},
+  {...MainRoute},
   {...ScheduleRoute},
-  {...TeamRoute}
+  {...TeamRoute},
+  {...ResultRoute}
 ]
 
 export const router = createRouter({

@@ -6,29 +6,7 @@
         <BarChart3Icon class="h-5 w-5 text-green-500" />
         <h2 class="text-xl font-semibold">V리그 순위</h2>
       </div>
-      <n-card>
-        <div class="overflow-x-auto">
-          <n-table single-column>
-            <thead>
-              <tr class="text-center">
-                <th class="w-[50px]">순위</th>
-                <th>팀</th>
-                <th>경기수</th>
-                <th>승점</th>
-                <th>승</th>
-                <th>패</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="text-center">
-                <td>1</td>
-                <td>ㅁㅁㅁㅁ</td>
-                <td></td>
-              </tr>
-            </tbody>
-          </n-table>
-        </div>
-      </n-card>
+        <ResultList></ResultList>
     </div>
     <div class="grid gap-8 md:grid-cols-1 lg:grid-cols-2">
       <!-- 오늘 경기 결과 -->
@@ -98,6 +76,7 @@
 <script setup>
 import { CalendarIcon, TrophyIcon, BarChart3Icon } from "lucide-vue-next"
 import { NTag, NCard, NTable} from "naive-ui"
+import {ResultList} from "@/views/result";
 </script>
 
 <style>

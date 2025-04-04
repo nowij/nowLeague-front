@@ -1,2 +1,1 @@
-export { default as Home } from "./home/Home.vue";
-export { default as Detail } from "./TeamDetail.vue";
+export { default as Home } from "./main/MainPage.vue";

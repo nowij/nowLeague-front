@@ -14,7 +14,7 @@
           <router-link to="/schedule" class="hover:underline">Schedule</router-link>
         </li>
         <li class="text-sm font-medium transition-colors">
-          <router-link to="/" class="hover:underline">Results</router-link>
+          <router-link to="/result" class="hover:underline">Results</router-link>
         </li>
         <li class="text-sm font-medium transition-colors">
           <router-link to="/team" class="hover:underline">Teams</router-link>

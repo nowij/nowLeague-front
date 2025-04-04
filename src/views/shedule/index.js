@@ -1,2 +1,2 @@
 export { default as Layout } from './Layout.vue'
-export { default as Schedule } from './Schedule.vue'
+export { default as SchedulePage } from './SchedulePage.vue'
