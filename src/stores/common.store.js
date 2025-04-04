@@ -13,7 +13,6 @@ export const useCommonStore = defineStore({
             try {
                 const response = await axiosWrapper.get('/api/common/seasons')
                 this.seasonList = response.data
-                console.log(this.seasonList)
             } catch (error) {
                 console.log(error);
             }
@@ -24,7 +23,6 @@ export const useCommonStore = defineStore({
             try {
                 const response = await axiosWrapper.get('/api/common/rounds');
                 this.roundList = response.data
-                console.log(this.roundList)
             } catch (error) {
                 console.log(error);
             }
@@ -34,7 +32,6 @@ export const useCommonStore = defineStore({
             try {
                 const response = await axiosWrapper.get('/api/common/teams')
                 this.teamList = response.data
-                console.log(this.teamList)
             } catch (error) {
                 console.log(error)
             }

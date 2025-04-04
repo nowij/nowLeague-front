@@ -6,45 +6,21 @@
         <div class="flex flex-col gap-4 sm:flex-row sm:items-end">
           <div class="grid w-full gap-2">
             <label class="text-sm font-medium text-gray-700">시즌</label>
-            <n-select v-model="searchSeason" class="w-full">
-
+            <n-select v-model:value="searchSeason" class="w-full"
+                      :options="seasonOptions" placeholder="선택하세요.">
             </n-select>
           </div>
           <div class="grid w-full gap-2">
             <label class="text-sm font-medium text-gray-700">라운드</label>
-            <n-select class="w-full" v-model="searchRound" >
-              <option value="" selected>전체</option>
-              <option v-for="(round, i) in roundList" :key="i" value="round.code">
-                {{round.korName}}
-              </option>
+            <n-select class="w-full" v-model:value="searchRound"
+                      :options="roundOptions" placeholder="선택하세요.">
             </n-select>
           </div>
-          <n-button @click.self.prevent="doSearch" class="mt-2 sm:mt-0">
+          <n-button @click="doSearch" class="mt-2 sm:mt-0">
             <SearchIcon class="h-4 w-5" />검색
           </n-button>
         </div>
       </n-card>
-      <!--    <select
-              class="py-3 px-4 pe-9 block w-[120px] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-              v-model="searchSeason"
-          >
-              <option v-for="(season, i) in seasonList" :key="i" value="season.seasonCode">
-                  {{season.seasonName}}
-              </option>
-          </select>
-          <select
-              class="py-3 px-4 pe-9 block w-[120px] border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-              v-model="searchRound"
-          >
-            <option value="" selected>전체</option>
-            <option v-for="(round, i) in roundList" :key="i" value="round.code">
-              {{round.korName}}
-            </option>
-          </select>
-          <button type="submit" @click.self.prevent="doSearch">
-            <SearchIcon className="h-4 w-4" />
-            조회
-          </button>-->
     </div>
 
     <!-- 결과창 -->
@@ -94,7 +70,7 @@
 </template>
 
 <script setup>
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import {useCommonStore} from "@/stores/common.store";
 import {storeToRefs} from "pinia";
 import {useScheduleStore} from "@/stores/schedule.store";
@@ -107,11 +83,18 @@ const { seasonList , roundList} = storeToRefs(commonStore)
 const { scheduleList } = storeToRefs(scheduleStore)
 const searchSeason = ref('')
 const searchRound = ref('')
+const seasonOptions = computed(() => {
+  return changeNaiveSelectOptions(seasonList.value)
+})
+const roundOptions = computed(() => {
+  return changeNaiveSelectOptions(roundList.value)
+})
 
 onMounted(() => {
   getSeasonList()
   getRoundList()
 });
+
 
 const getSeasonList = () => {
   commonStore.selectSeasons();
@@ -122,11 +105,23 @@ const getRoundList= () => {
 }
 
 const doSearch = () => {
+  console.log("ss")
   const params = {
     season : searchSeason.value,
     round : searchRound.value
   }
+  console.log(params)
   scheduleStore.selectSchedule(params)
+}
+
+const changeNaiveSelectOptions = (list) => {
+  if (!Array.isArray(list)) {
+    return [];
+  }
+  return list.map(data => ({
+    label: data.name,
+    value: data.code
+  }));
 }
 
 </script>

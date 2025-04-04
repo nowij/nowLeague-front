@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const axiosWrapper = {
     get: request('GET'),
     post: request('POST'),
@@ -6,28 +8,28 @@ export const axiosWrapper = {
 }
 
 function request(method) {
-    return (url, body) => {
+    return (url, options = {}) => {
         const requestOptions = {
             method: method,
-            headers: authHeader(),
-            url: url
+            url: url,
+            headers: {
+                'Content-Type': 'application/json'
+            }
         };
 
-        if (body) {
-            requestOptions.headers['Content-Type'] = 'application/json';
-            requestOptions.data = body;
+        if (method === 'GET' && options.params) {
+            requestOptions.params = options.params;
+        } else if (options.body) {
+            requestOptions.data = options.body;
         }
-        console.log('>>> requestOptions')
-        console.log(requestOptions)
+
+        console.log('>>> requestOptions');
+        console.log(requestOptions);
 
         return axios(requestOptions)
-            .then(res => {
-                console.log(res.data);
-                return res;
-            })
+            .then(res => res)
             .catch(err => {
-                console.log('axios 에러');
-                console.log(err);
+                console.error('axios 에러', err);
             });
     }
 }
