@@ -29,7 +29,7 @@
         <div class="flex items-center gap-2">
           <CalendarIcon className="h-5 w-5 text-blue-500" />
           <h2 class="text-xl font-semibold">
-            ~~ 일정
+            일정
           </h2>
         </div>
       </div>
@@ -39,25 +39,18 @@
           <n-table single-line>
             <thead class="text-center">
               <tr>
+                <th class="w-[80px]">번호</th>
                 <th class="w-[100px]">날짜</th>
-                <th class="w-[80px]">시간</th>
                 <th>경기</th>
                 <th>경기장</th>
                 <th class="w-[100px]">상태</th>
               </tr>
             </thead>
             <tbody class="text-center">
-              <tr>
-                <td>aa</td>
-                <td>aa</td>
-                <td>ㅁㅁ vs ㅇㅇ</td>
-                <td>aa</td>
-                <td>예정</td>
-              </tr>
-              <tr>
-                <td>aa</td>
-                <td>aa</td>
-                <td>ㅁㅁ vs ㅇㅇ</td>
+              <tr v-for="(schedule, i) in scheduleList" :key="i">
+                <td>{{ schedule.GAME_NO}}</td>
+                <td>{{schedule.GAME_DATE}}</td>
+                <td>{{ schedule.HOME_CODE }} vs {{ schedule.AWAY_CODE }}</td>
                 <td>aa</td>
                 <td>예정</td>
               </tr>
@@ -105,15 +98,14 @@ const getRoundList= () => {
 }
 
 const doSearch = () => {
-  console.log("ss")
   const params = {
     season : searchSeason.value,
     round : searchRound.value
   }
-  console.log(params)
   scheduleStore.selectSchedule(params)
 }
 
+// naive 형식에 맞춤
 const changeNaiveSelectOptions = (list) => {
   if (!Array.isArray(list)) {
     return [];
