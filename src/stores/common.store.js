@@ -9,6 +9,7 @@ export const useCommonStore = defineStore({
         teamList: {}
     }),
     actions: {
+        // 시즌 조회
         async selectSeasons() {
             try {
                 const response = await axiosWrapper.get('/api/common/seasons')
@@ -18,7 +19,7 @@ export const useCommonStore = defineStore({
             }
         },
 
-        // 라운드 리스트
+        // 라운드 목록 조회
         async selectRounds() {
             try {
                 const response = await axiosWrapper.get('/api/common/rounds');
@@ -28,10 +29,12 @@ export const useCommonStore = defineStore({
             }
         },
 
+        // 팀 목록 조회
         async selectTeams() {
             try {
                 const response = await axiosWrapper.get('/api/common/teams')
                 this.teamList = response.data
+                console.log(response.data)
             } catch (error) {
                 console.log(error)
             }
