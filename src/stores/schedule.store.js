@@ -10,7 +10,7 @@ export const useScheduleStore = defineStore({
     actions: {
         async selectSchedule(params) {
             try {
-                const response = await axiosWrapper.get('/api/game/schedule', {params});
+                const response = await axiosWrapper.get('/game/schedule', {params});
                 this.scheduleList = response.data
             } catch (error) {
                 console.log(error);

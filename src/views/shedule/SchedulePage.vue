@@ -42,21 +42,23 @@
                 <th class="w-[80px]">번호</th>
                 <th class="w-[100px]">날짜</th>
                 <th>경기</th>
-                <th>경기장</th>
-                <th class="w-[100px]">상태</th>
+                <th class="w-[100px]">결과</th>
               </tr>
             </thead>
             <tbody class="text-center">
               <tr v-for="(schedule, i) in scheduleList" :key="i">
-                <td>{{ schedule.GAME_NO}}</td>
-                <td>{{schedule.GAME_DATE}}</td>
-                <td>{{ schedule.HOME_CODE }} vs {{ schedule.AWAY_CODE }}</td>
-                <td>aa</td>
-                <td>예정</td>
+                <td>{{ schedule.gameNo }}</td>
+                <td>{{ schedule.gameDate }}</td>
+                <td>{{ schedule.homeName }} vs {{ schedule.awayName }}</td>
+                <td v-if="schedule.homeSpoint != null">{{ schedule.homeSpoint}} : {{ schedule.awaySpoint }}</td>
+                <td v-if="schedule.homeSpoint == null">예정</td>
               </tr>
             </tbody>
           </n-table>
         </n-card>
+      </div>
+      <div class="flex items-center justify-center space-x-2 py-4" v-if="total > 0">
+        <n-pagination :page-count="total" :page-size="10"></n-pagination>
       </div>
     </div>
   </div>
@@ -68,7 +70,7 @@ import {useCommonStore} from "@/stores/common.store";
 import {storeToRefs} from "pinia";
 import {useScheduleStore} from "@/stores/schedule.store";
 import { CalendarIcon, SearchIcon } from "lucide-vue-next"
-import { NSelect, NCard, NButton, NTable } from "naive-ui"
+import { NSelect, NCard, NButton, NTable, NPagination } from "naive-ui"
 
 const commonStore = useCommonStore();
 const scheduleStore = useScheduleStore();
@@ -82,6 +84,8 @@ const seasonOptions = computed(() => {
 const roundOptions = computed(() => {
   return changeNaiveSelectOptions(roundList.value)
 })
+
+const total = ref(0)
 
 onMounted(() => {
   getSeasonList()
@@ -103,6 +107,8 @@ const doSearch = () => {
     round : searchRound.value
   }
   scheduleStore.selectSchedule(params)
+  console.log('size : ',scheduleList.size)
+  total.value = scheduleList.size
 }
 
 // naive 형식에 맞춤

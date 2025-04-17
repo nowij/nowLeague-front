@@ -6,14 +6,25 @@ export const useCommonStore = defineStore({
     state: () => ({
         seasonList: {},
         roundList: {},
-        teamList: {}
+        teamList: {},
+        todaySeason: ''
     }),
     actions: {
         // 시즌 조회
         async selectSeasons() {
             try {
-                const response = await axiosWrapper.get('/api/common/seasons')
+                const response = await axiosWrapper.get('/seasons')
                 this.seasonList = response.data
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        // 현재 시즌 조회
+        async selectTodayRound(params) {
+            try {
+                const response = await axiosWrapper.get('/today/season', { params });
+                this.todaySeason = response.data
             } catch (error) {
                 console.log(error);
             }
@@ -22,7 +33,7 @@ export const useCommonStore = defineStore({
         // 라운드 목록 조회
         async selectRounds() {
             try {
-                const response = await axiosWrapper.get('/api/common/rounds');
+                const response = await axiosWrapper.get('/rounds');
                 this.roundList = response.data
             } catch (error) {
                 console.log(error);
@@ -32,7 +43,7 @@ export const useCommonStore = defineStore({
         // 팀 목록 조회
         async selectTeams() {
             try {
-                const response = await axiosWrapper.get('/api/common/teams')
+                const response = await axiosWrapper.get('/teams')
                 this.teamList = response.data
                 console.log(response.data)
             } catch (error) {

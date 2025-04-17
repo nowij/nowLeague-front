@@ -29,8 +29,8 @@
           </n-dialog-provider>
         </n-button>
       </div>
-      <!-- 결과표 -->
-      <ResultList></ResultList>
+      <!-- 순위표 -->
+      <Ranking></Ranking>
     </div>
     
   </div>
@@ -39,7 +39,7 @@
 <script setup>
 import {NCard, NButton, NDialogProvider, NTable, useDialog, NTag} from "naive-ui";
 import { TrophyIcon, BarChart3Icon, LineChartIcon } from "lucide-vue-next"
-import { ResultList, TodayResult } from "@/views/result";
+import { Ranking, TodayResult } from "@/views/result";
 
 const execDialog = () => {
   const dialog = useDialog()

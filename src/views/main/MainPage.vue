@@ -6,7 +6,7 @@
         <BarChart3Icon class="h-5 w-5 text-green-500" />
         <h2 class="text-xl font-semibold">V리그 순위</h2>
       </div>
-        <ResultList></ResultList>
+        <Ranking :month-value="String(202403)"></Ranking>
     </div>
     <div class="grid gap-8 md:grid-cols-1 lg:grid-cols-2">
       <!-- 오늘 경기 결과 -->
@@ -32,9 +32,11 @@
 
 <script setup>
 import { CalendarIcon, TrophyIcon, BarChart3Icon } from "lucide-vue-next"
-import { ResultList } from "@/views/result";
+import { Ranking } from "@/views/result";
 import { ScheduleCard } from "@/views/shedule";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
+
+const todayMonth = ref('');
 
 onMounted(() => {
   // getToday() // TODO
@@ -48,8 +50,11 @@ const getToday = () => {
 
   month = month < 10 ? '0' + month : month
 
+  todayMonth.value = year + month;
+
   return year + month + day
 }
+
 </script>
 
 <style>
