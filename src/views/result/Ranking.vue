@@ -13,13 +13,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="text-center" v-for="(rank, i) in rankingList" :key="i">
+          <tr v-if="rankingList.length > 0" class="text-center" v-for="(rank, i) in rankingList" :key="i">
             <td>{{ rank.ranking }}</td>
             <td>{{ rank.teamName }}</td>
             <td>{{ rank.winPoint }}</td>
             <td>{{ rank.winPoint }}</td>
             <td>{{ rank.winCount }}</td>
             <td>{{ rank.loseCount }}</td>
+          </tr>
+          <tr v-else class="text-center">
+            <td colspan="6" class="text-center h-[300px]"><p class="text-gray-500">진행 중인 경기가 없습니다.</p></td>
           </tr>
         </tbody>
       </n-table>
@@ -42,20 +45,17 @@ const { monthValue } = defineProps({
   monthValue: String
 })
 
-const season = ref('')
+onMounted(async () => {
+  await getTodaySeason()
 
-onMounted(() => {
-  getTodaySeason()
 })
 
-const getTodaySeason = () => {
+const getTodaySeason = async () => {
   const params = {
     month : monthValue
   }
 
-  console.log('확인 ', monthValue)
-
-  commonStore.selectTodayRound(params);
+  await commonStore.selectTodayRound(params);
   getTodayRanking(todaySeason.value)
 }
 
@@ -63,7 +63,6 @@ const getTodayRanking = (code) => {
   const params = {
     season: code
   }
-  console.log(params)
   resultStore.selectRanking(params)
 }
 
