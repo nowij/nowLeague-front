@@ -3,9 +3,12 @@
     <n-table single-column>
       <thead>
         <tr>
-          <th><n-tag size="small" round>V리그</n-tag></th>
-          <th></th>
-          <th class="right-right">{{ specificSchedule.gameDate }}</th>
+          <th colspan="3">
+            <div class="flex justify-between items-center w-full">
+              <n-tag size="small" round>V리그</n-tag>
+              <span>{{ specificSchedule.gameDate }}</span>
+            </div>
+          </th>
         </tr>
       </thead>
       <tbody class="text-center">
