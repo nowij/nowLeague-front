@@ -8,11 +8,7 @@
           <h2 class="text-xl font-semibold">오늘의 경기 결과</h2>
         </div>
       </div>
-      <n-card>
-        <div class="p-4 rounded-lg">
-          <TodayResult></TodayResult>
-        </div>
-      </n-card>
+      <ScheduleCard :date-value="String(20240315)"/>
     </div>
 
     <div class="space-y-4">
@@ -39,7 +35,8 @@
 <script setup>
 import {NCard, NButton, NDialogProvider, NTable, useDialog, NTag} from "naive-ui";
 import { TrophyIcon, BarChart3Icon, LineChartIcon } from "lucide-vue-next"
-import { Ranking, TodayResult } from "@/views/result";
+import { Ranking } from "@/views/result";
+import {ScheduleCard} from "@/views/shedule";
 
 const execDialog = () => {
   const dialog = useDialog()
