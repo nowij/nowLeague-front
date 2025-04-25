@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto px-4 py-8">
+  <div class="max-w-screen-xl mx-auto px-4 py-8">
     <!-- 오늘 경기 결과 -->
     <div class="mb-8 space-y-4">
       <div class="flex items-center justify-between">
@@ -8,7 +8,7 @@
           <h2 class="text-xl font-semibold">오늘의 경기 결과</h2>
         </div>
       </div>
-      <ScheduleCard :date-value="String(20240315)"/>
+      <ScheduleCard v-if="todayResult != null" :schedule-value="todayResult"/>
     </div>
 
     <div class="space-y-4">
@@ -33,11 +33,14 @@
 </template>
 
 <script setup>
-import {NCard, NButton, NDialogProvider, NTable, useDialog, NTag} from "naive-ui";
+import {NButton, NDialogProvider, useDialog} from "naive-ui";
 import { TrophyIcon, BarChart3Icon, LineChartIcon } from "lucide-vue-next"
 import { Ranking } from "@/views/result";
 import {ScheduleCard} from "@/views/shedule";
+import {axiosWrapper} from "@/mixins";
+import {onMounted, ref} from "vue";
 
+const todayResult = ref(null);
 const execDialog = () => {
   const dialog = useDialog()
   dialog.success({
@@ -45,5 +48,22 @@ const execDialog = () => {
     content: "asas"
   })
   return dialog
+}
+
+onMounted( async () => {
+  todayResult.value =await getResult(20240315)
+})
+
+const getResult = async (dateValue) => {
+  const params = {
+    date: dateValue
+  }
+  try {
+    const response = await axiosWrapper.get('/game/schedule/date', {params})
+    return response.data
+  } catch (error) {
+    console.log('스케줄 조회 에러 ', error)
+    return {}
+  }
 }
 </script>
