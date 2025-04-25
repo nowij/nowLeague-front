@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto px-4 py-8">
+  <div class="max-w-screen-xl mx-auto px-4 py-8">
     <!-- 검색창 -->
     <div class="flex items-center gap-4">
       <n-card title="일정 검색">
@@ -16,7 +16,7 @@
                       :options="roundOptions" placeholder="선택하세요.">
             </n-select>
           </div>
-          <n-button @click="doSearch" class="mt-2 sm:mt-0">
+          <n-button @click="doSearch(0)" class="mt-2 sm:mt-0">
             <SearchIcon class="h-4 w-5" />검색
           </n-button>
         </div>
@@ -57,8 +57,8 @@
           </n-table>
         </n-card>
       </div>
-      <div class="flex items-center justify-center space-x-2 py-4" v-if="total > 0">
-        <n-pagination :page-count="total" :page-size="10"></n-pagination>
+      <div class="flex items-center justify-center space-x-2 py-4" v-if="scheduleList.length > 0">
+        <n-pagination :page-count="Math.ceil(pageInfo.total / pageInfo.pageSize)" :page-size="pageInfo.pageSize" @update:page="changePage"></n-pagination>
       </div>
     </div>
   </div>
@@ -75,7 +75,7 @@ import { NSelect, NCard, NButton, NTable, NPagination } from "naive-ui"
 const commonStore = useCommonStore();
 const scheduleStore = useScheduleStore();
 const { seasonList , roundList} = storeToRefs(commonStore)
-const { scheduleList } = storeToRefs(scheduleStore)
+const { scheduleList, pageInfo } = storeToRefs(scheduleStore)
 const searchSeason = ref('')
 const searchRound = ref('')
 const seasonOptions = computed(() => {
@@ -84,8 +84,6 @@ const seasonOptions = computed(() => {
 const roundOptions = computed(() => {
   return changeNaiveSelectOptions(roundList.value)
 })
-
-const total = ref(0)
 
 onMounted(() => {
   getSeasonList()
@@ -101,14 +99,13 @@ const getRoundList= () => {
   commonStore.selectRounds();
 }
 
-const doSearch = () => {
+const doSearch = (pageNo) => {
   const params = {
     season : searchSeason.value,
-    round : searchRound.value
+    round : searchRound.value,
+    page: pageNo
   }
   scheduleStore.selectSchedule(params)
-  console.log('size : ',scheduleList.size)
-  total.value = scheduleList.size
 }
 
 // naive 형식에 맞춤
@@ -116,10 +113,21 @@ const changeNaiveSelectOptions = (list) => {
   if (!Array.isArray(list)) {
     return [];
   }
-  return list.map(data => ({
+
+  const options = list.map(data => ({
     label: data.name,
     value: data.code
   }));
+
+  return [
+    { label: '전체 선택', value: '' },
+    ...options
+  ];
 }
 
+
+const changePage = (newPage) => {
+  console.log('페이지 확인 ',newPage)
+  doSearch(newPage)
+}
 </script>

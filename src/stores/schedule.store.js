@@ -5,13 +5,16 @@ export const useScheduleStore = defineStore({
     id: 'schedule',
     state: () => ({
         scheduleList: {},
-        specificSchedule: {}
+        specificSchedule: {},
+        pageInfo : {}
     }),
     actions: {
         async selectSchedule(params) {
             try {
                 const response = await axiosWrapper.get('/game/schedule', {params});
-                this.scheduleList = response.data
+                const { content, pageSize, total, page } = response.data
+                this.scheduleList = content
+                this.pageInfo = { pageSize, total, page }
             } catch (error) {
                 console.log(error);
             }
