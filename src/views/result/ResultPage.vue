@@ -19,21 +19,28 @@
         </div>
         <n-button size="small" class="gap-2">
           <LineChartIcon class="h-4 w-4" />
-          <span class="hidden sm:inline" @click.self.prevent="execDialog">순위 변동 그래프</span>
-          <n-dialog-provider>
-            <content />
-          </n-dialog-provider>
+          <span class="hidden sm:inline" @click="execDialog">순위 변동 그래프</span>
         </n-button>
       </div>
       <!-- 순위표 -->
       <Ranking></Ranking>
     </div>
-    
   </div>
+
+  <!-- 모달창 -->
+  <n-modal
+      v-model:show="showDialog"
+      preset="dialog"
+      title="순위 변동 그래프"
+      @close="showDialog = false"
+  >
+    <!-- 여기 안에 그래프 컴포넌트 불러오면 됩니다 -->
+    <div>여기에 그래프 들어갑니다</div>
+  </n-modal>
 </template>
 
 <script setup>
-import {NButton, NDialogProvider, useDialog} from "naive-ui";
+import {NButton, NModal } from "naive-ui";
 import { TrophyIcon, BarChart3Icon, LineChartIcon } from "lucide-vue-next"
 import { Ranking } from "@/views/result";
 import {ScheduleCard} from "@/views/shedule";
@@ -41,13 +48,10 @@ import {axiosWrapper} from "@/mixins";
 import {onMounted, ref} from "vue";
 
 const todayResult = ref(null);
+const showDialog = ref(false)
+
 const execDialog = () => {
-  const dialog = useDialog()
-  dialog.success({
-    title: "그래프",
-    content: "asas"
-  })
-  return dialog
+  showDialog.value = true
 }
 
 onMounted( async () => {
