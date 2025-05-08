@@ -17,32 +17,33 @@
           <BarChart3Icon class="h-5 w-5 text-green-500" />
           <h2 class="text-xl font-semibold">V리그 순위</h2>
         </div>
-        <n-button size="small" class="gap-2">
+        <n-button size="small" class="gap-2" @click="execDialog">
           <LineChartIcon class="h-4 w-4" />
-          <span class="hidden sm:inline" @click="execDialog">순위 변동 그래프</span>
+          <span class="hidden sm:inline">순위 변동 그래프</span>
         </n-button>
       </div>
       <!-- 순위표 -->
-      <Ranking></Ranking>
+      <Ranking month-value="202403"></Ranking>
     </div>
   </div>
 
   <!-- 모달창 -->
   <n-modal
       v-model:show="showDialog"
-      preset="dialog"
-      title="순위 변동 그래프"
-      @close="showDialog = false"
-  >
-    <!-- 여기 안에 그래프 컴포넌트 불러오면 됩니다 -->
-    <div>여기에 그래프 들어갑니다</div>
+      @close="showDialog=false">
+    <n-card
+        role="dialog"
+        aria-modal="true"
+        style="width:50%;height:70%">
+      <RankingGraph></RankingGraph>
+    </n-card>
   </n-modal>
 </template>
 
 <script setup>
-import {NButton, NModal } from "naive-ui";
+import {NButton, NModal, NCard } from "naive-ui";
 import { TrophyIcon, BarChart3Icon, LineChartIcon } from "lucide-vue-next"
-import { Ranking } from "@/views/result";
+import { Ranking, RankingGraph } from "@/views/result";
 import {ScheduleCard} from "@/views/shedule";
 import {axiosWrapper} from "@/mixins";
 import {onMounted, ref} from "vue";
@@ -55,7 +56,7 @@ const execDialog = () => {
 }
 
 onMounted( async () => {
-  todayResult.value =await getResult(20240315)
+  todayResult.value = await getResult(20240315)
 })
 
 const getResult = async (dateValue) => {

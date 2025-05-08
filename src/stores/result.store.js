@@ -5,6 +5,7 @@ export const useResultStore = defineStore({
     id: 'result',
     state: () => ({
         rankingList: {},
+        rankingGraphList: {},
         recentResultList: {}
     }),
     actions: {
@@ -14,6 +15,14 @@ export const useResultStore = defineStore({
                 this.rankingList = response.data
             } catch (error) {
                 console.log('ranking 조회 에러 : ', error);
+            }
+        },
+        async selectRankingGraph(params) {
+            try {
+                const response = await axiosWrapper.get('/game/rank/graph', {params});
+                this.rankingGraphList = response.data
+            } catch (error) {
+                console.log('ranking graph 조회 에러 : ', error);
             }
         },
         async selectRecentResult(params) {
