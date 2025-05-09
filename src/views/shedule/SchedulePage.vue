@@ -7,13 +7,13 @@
           <div class="grid w-full gap-2">
             <label class="text-sm font-medium text-gray-700">시즌</label>
             <n-select v-model:value="searchSeason" class="w-full"
-                      :options="seasonOptions" placeholder="선택하세요.">
+                      :options="seasonOptions">
             </n-select>
           </div>
           <div class="grid w-full gap-2">
             <label class="text-sm font-medium text-gray-700">라운드</label>
             <n-select class="w-full" v-model:value="searchRound"
-                      :options="roundOptions" placeholder="선택하세요.">
+                      :options="roundOptions">
             </n-select>
           </div>
           <n-button @click="doSearch(0)" class="mt-2 sm:mt-0">
@@ -103,7 +103,7 @@ const doSearch = (pageNo) => {
   const params = {
     season : searchSeason.value,
     round : searchRound.value,
-    page: pageNo
+    page: pageNo-1
   }
   scheduleStore.selectSchedule(params)
 }
@@ -127,7 +127,6 @@ const changeNaiveSelectOptions = (list) => {
 
 
 const changePage = (newPage) => {
-  console.log('페이지 확인 ',newPage)
   doSearch(newPage)
 }
 </script>
