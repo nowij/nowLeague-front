@@ -6,7 +6,8 @@
         <BarChart3Icon class="h-5 w-5 text-green-500" />
         <h2 class="text-xl font-semibold">V리그 순위</h2>
       </div>
-        <Ranking :month-value="String(202403)"></Ranking>
+<!--        <Ranking :month-value="String(202403)"></Ranking>-->
+      <Ranking :month-value="todayMonth"></Ranking>
     </div>
     <div class="grid gap-8 md:grid-cols-1 lg:grid-cols-2">
       <!-- 오늘 경기 결과 -->
@@ -16,6 +17,7 @@
           <h2 class="text-xl font-semibold">오늘의 경기 결과</h2>
         </div>
         <ScheduleCard v-if="todayResult" :schedule-value="todayResult" />
+        <Card v-else :message-value="String('진행 중인 경기가 없습니다.')"></Card>
       </div>
 
       <!-- 다음 경기 -->
@@ -25,6 +27,7 @@
           <h2 class="text-xl font-semibold">다음 경기 일정</h2>
         </div>
         <ScheduleCard v-if="nextResult" :schedule-value="nextResult" />
+        <Card v-else :message-value="String('진행 중인 경기가 없습니다.')"></Card>
       </div>
     </div>
   </main>
@@ -33,6 +36,7 @@
 <script setup>
 import { CalendarIcon, TrophyIcon, BarChart3Icon } from "lucide-vue-next"
 import { Ranking } from "@/views/result";
+import { Card } from "../../components"
 import { ScheduleCard } from "@/views/shedule";
 import { onMounted, ref } from "vue";
 import {axiosWrapper} from "@/mixins";
@@ -42,9 +46,12 @@ const todayResult = ref(null);
 const nextResult = ref(null);
 
 onMounted(async () => {
-  // getToday() // TODO
-  todayResult.value = await getResult(20240315);
-  nextResult.value = await getResult(20240316);
+  // TODO
+  todayResult.value = await getResult(getToday());
+  nextResult.value = await getResult(getToday());
+  // 임시
+  // todayResult.value = await getResult(20240315);
+  // nextResult.value = await getResult(20240316);
 })
 
 const getToday = () => {

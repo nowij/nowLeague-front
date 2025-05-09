@@ -107,9 +107,15 @@ const changeNaiveSelectOptions = (list) => {
   if (!Array.isArray(list)) {
     return [];
   }
-  return list.map(data => ({
+
+  const options = list.map(data => ({
     label: data.name,
     value: data.code
   }));
+
+  return [
+    { label: '전체 선택', value: '' },
+    ...options
+  ];
 }
 </script>
